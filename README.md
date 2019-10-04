@@ -49,6 +49,7 @@ cd ../
 git clone https://github.com/terraform-google-modules/terraform-google-project-factory
 git clone https://github.com/terraform-google-modules/terraform-google-cloud-nat.git
 git clone https://github.com/terraform-google-modules/terraform-google-lb-http.git
+git clone https://github.com/terraform-google-modules/terraform-google-vm.git
 ```
 
 ## Run Terraform
