@@ -2,8 +2,6 @@
 
 [![button](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/terraform-google-lb-http&working_dir=examples/basic&page=shell&tutorial=README.md)
 
-<img src="https://concourse-tf.gcp.solutions/api/v1/teams/main/pipelines/tf-examples-lb-http-basic/badge" /></a>
-
 This example creates a global HTTP forwarding rule to forward traffic to instance groups in the us-west1 and us-east1 regions.
 
 **Figure 1.** *diagram of Google Cloud resources*
