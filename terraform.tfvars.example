@@ -1,0 +1,11 @@
+project_id = "YOU_PROJECT_ID"
+
+group1_region = "europe-west3"
+group2_region = "us-east1"
+
+service_account = {
+  email  = "you_gcloud_email"
+  scopes = ["cloud-platform"]
+}
+
+credentials_path  = "credits.json"
