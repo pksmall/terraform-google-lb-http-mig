@@ -1,7 +1,5 @@
 # HTTP Load Balancer Example
 
-[![button](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/terraform-google-lb-http&working_dir=examples/basic&page=shell&tutorial=README.md)
-
 <a href="https://concourse-tf.gcp.solutions/teams/main/pipelines/tf-examples-lb-http-basic" target="_blank">
 <img src="https://concourse-tf.gcp.solutions/api/v1/teams/main/pipelines/tf-examples-lb-http-basic/badge" /></a>
 
