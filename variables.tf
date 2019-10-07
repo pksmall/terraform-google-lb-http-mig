@@ -32,6 +32,26 @@ variable "group2_region" {
   default = "us-east1"
 }
 
+variable "group3_region" {
+  type    = string
+  default = "us-central1"
+}
+
+variable "group1_size" {
+  type    = string
+  default = 2
+}
+
+variable "group2_size" {
+  type    = string
+  default = 2
+}
+
+variable "group3_size" {
+  type    = string
+  default = 2
+}
+
 variable "network_prefix" {
   type    = string
   default = "multi-mig-lb-http"

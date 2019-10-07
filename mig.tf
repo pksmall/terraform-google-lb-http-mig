@@ -42,7 +42,7 @@ module "mig1" {
   instance_template = "${module.mig1_template.self_link}"
   region            = "${var.group1_region}"
   hostname          = "${var.network_prefix}-group1"
-  target_size       = "${var.target_size}"
+  target_size       = var.group1_size >= 0 ? var.group1_size : var.target_size
   named_ports       = [
     {
       name = "http",
@@ -69,7 +69,8 @@ module "mig2" {
   instance_template = "${module.mig2_template.self_link}"
   region            = "${var.group2_region}"
   hostname          = "${var.network_prefix}-group2"
-  target_size       = "${var.target_size}"
+  #target_size       = "${var.target_size}"
+  target_size       = var.group2_size >= 0? var.group2_size : var.target_size
   named_ports       = [
     {
       name = "http",
@@ -77,4 +78,32 @@ module "mig2" {
     }]
   network           = "${google_compute_network.default.self_link}"
   subnetwork        = "${google_compute_subnetwork.group2.self_link}"
+}
+
+module "mig3_template" {
+  source          = "../terraform-google-vm/modules/instance_template"
+  network         = "${google_compute_network.default.self_link}"
+  subnetwork      = "${google_compute_subnetwork.group3.self_link}"
+  service_account = "${var.service_account}"
+  name_prefix     = "${var.network_prefix}-group3"
+  startup_script  = "${data.template_file.group-startup-script.rendered}"
+  tags            = [
+    "${var.network_prefix}-group3",
+    "${module.cloud-nat-group3.router_name}"]
+}
+
+module "mig3" {
+  source            = "../terraform-google-vm/modules/mig"
+  instance_template = "${module.mig3_template.self_link}"
+  region            = "${var.group3_region}"
+  hostname          = "${var.network_prefix}-group3"
+  #target_size       = "${var.target_size}"
+  target_size       = var.group3_size >= 0? var.group3_size : var.target_size
+  named_ports       = [
+    {
+      name = "http",
+      port = 80
+    }]
+  network           = "${google_compute_network.default.self_link}"
+  subnetwork        = "${google_compute_subnetwork.group3.self_link}"
 }

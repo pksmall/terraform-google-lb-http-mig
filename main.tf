@@ -77,6 +77,28 @@ module "cloud-nat-group2" {
   name       = "${var.network_prefix}-cloud-nat-group2"
 }
 
+# Router and Cloud NAT are required for installing packages from repos (apache, php etc)
+resource "google_compute_router" "group3" {
+  name    = "${var.network_prefix}-gw-group3"
+  network = "${google_compute_network.default.self_link}"
+  region  = "${var.group3_region}"
+}
+
+module "cloud-nat-group3" {
+  source     = "../terraform-google-cloud-nat/"
+  router     = "${google_compute_router.group3.name}"
+  project_id = "${var.project_id}"
+  region     = "${var.group3_region}"
+  name       = "${var.network_prefix}-cloud-nat-group3"
+}
+
+resource "google_compute_subnetwork" "group3" {
+  name                     = "${var.network_prefix}-group3"
+  ip_cidr_range            = "10.128.0.0/20"
+  network                  = "${google_compute_network.default.self_link}"
+  region                   = "${var.group3_region}"
+  private_ip_google_access = true
+}
 
 module "gce-lb-http" {
   source            = "../terraform-google-lb-http"
@@ -86,7 +108,9 @@ module "gce-lb-http" {
     "${var.network_prefix}-group1",
     "${module.cloud-nat-group1.router_name}",
     "${var.network_prefix}-group2",
-    "${module.cloud-nat-group2.router_name}"]
+    "${module.cloud-nat-group2.router_name}",
+    "${var.network_prefix}-group3",
+    "${module.cloud-nat-group3.router_name}"]
   firewall_networks = [
     "${google_compute_network.default.name}"]
 
@@ -105,6 +129,17 @@ module "gce-lb-http" {
       },
       {
         group                        = "${module.mig2.instance_group}"
+        balancing_mode               = null
+        capacity_scaler              = null
+        description                  = null
+        max_connections              = null
+        max_connections_per_instance = null
+        max_rate                     = null
+        max_rate_per_instance        = null
+        max_utilization              = null
+      },
+      {
+        group                        = "${module.mig3.instance_group}"
         balancing_mode               = null
         capacity_scaler              = null
         description                  = null
