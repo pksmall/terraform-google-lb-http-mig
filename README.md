@@ -72,7 +72,7 @@ echo http://$(terraform output load-balancer-ip)
 
 You should see the instance details from the region closest to you.
 
-## Test balancing to other region *not working yet*
+## Test balancing to other region
 
 Resize the instance group of your closest region to cause traffic to flow to the other group.
 
